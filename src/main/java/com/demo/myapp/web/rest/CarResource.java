@@ -32,4 +32,32 @@ public class CarResource {
     public ResponseEntity<Collection<CarDTO>> getAllCars() {
         return ResponseEntity.ok(map.values());
     }
+
+    @PutMapping("/car")
+    public ResponseEntity<CarDTO> updateUser(@RequestBody CarDTO car, CarDTO car2) {
+        log.debug("REST request to save User : {}", car);
+        if (map.get(car.getId()) != null) {
+            String id = car.getId();
+            map.replace(id, car2);
+            return ResponseEntity.ok(car2);
+        } else {
+            String result = "value does not exist";
+            return ResponseEntity.ok(null);
+        }
+    }
+
+    @DeleteMapping("/car")
+    public ResponseEntity<Void> deleteUser(@RequestBody CarDTO car) {
+        log.debug("REST request to delete User: {}", car);
+        if (map.get(car.getId()) != null) {
+            String id = car.getId();
+
+            map.remove(id);
+
+            return ResponseEntity.ok(null);
+        } else {
+            String result = "value does not exist";
+            return ResponseEntity.ok(null);
+        }
+    }
 }
